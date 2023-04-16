@@ -1,6 +1,7 @@
 # Smart Ptr Implementation 
 
-Task:
+**Task:**
+
 Implement a class for smart pointer (to arbitrary type) with counting references. One object instance can
 have several pointers pointing to it. When the object is created or pointer is copied, the counter should
 be increased. When the pointer instance is destroyed, the counter should be decreased. When counter
