@@ -2,7 +2,7 @@
 
 #include "smart_ptr.h"
 
-int calc_sum(smart_ptr<int>& values, int size) {
+int calc_sum(smart_ptr<int[]>& values, int size) {
   int sum = 0;
   if (values == nullptr){
     return 0;
@@ -12,7 +12,7 @@ int calc_sum(smart_ptr<int>& values, int size) {
   }
   return sum;
 }
-void fill_arr(smart_ptr<int>& values, int size) {
+void fill_arr(smart_ptr<int[]>& values, int size) {
   if (values == nullptr){
     return;
   }
@@ -29,11 +29,11 @@ int* init(int size = 10) {
 }
 
 int main() {
-  smart_ptr<int> ptr = new int[10];
+  smart_ptr<int[]> ptr = new int[10];
   fill_arr(ptr, 10);
   int res = calc_sum(ptr, 10);
-  std::cout << "Reference count of is:" << ptr.get_ref_count() << std::endl;
-  smart_ptr<int> data = init();
+  std::cout << "Reference count is:" << ptr.get_ref_count() << std::endl;
+  smart_ptr<int[]> data = init();
   printf("%i\n", data[0]);
   if(data) {
     printf("%i\n", data[0]);
