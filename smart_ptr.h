@@ -159,7 +159,7 @@ private:
 
   void __clean__() {
     delete var_ref_count;
-    delete data;
+    delete[] data;
     var_ref_count = nullptr;
     data = nullptr;
   }
@@ -185,9 +185,6 @@ public:
   }
   smart_ptr(smart_ptr<T>&& other)
       : data{other.data}, var_ref_count{other.var_ref_count}, check{other.check} {
-    other.data = nullptr;
-    other.var_ref_count = nullptr;
-    other.check.reset_check();
   }
   smart_ptr<T>& operator=(const smart_ptr<T>& other) {
     if (this != &other) {
@@ -203,14 +200,13 @@ public:
   }
   smart_ptr<T>& operator=(smart_ptr<T>&& other) {
     if (this != &other) {
-      __clean__();
+      if (var_ref_count && var_ref_count->decrement() == 0) {
+        __clean__();
+      }
       data = other.data;
       var_ref_count = other.var_ref_count;
       check = std::move(other.check);
       check.reset_check();
-      other.data = nullptr;
-      other.var_ref_count = nullptr;
-      other.check.reset_check();
     }
     return *this;
   }
